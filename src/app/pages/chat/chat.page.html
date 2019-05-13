@@ -1,16 +1,32 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
     <ion-title>{{ user?.name }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content> </ion-content>
+<ion-content color="light">
+  <div class="bubble-wrap">
+    <div
+      class="bubble"
+      *ngFor="let message of messages | async"
+      [ngClass]="{ reply: message.from.username !== user.username }"
+    >
+      {{ message.body }}
+    </div>
+  </div>
+</ion-content>
 
 <ion-footer>
   <ion-toolbar>
-    <ion-input placeholder="Write your message"></ion-input>
+    <ion-input
+      [(ngModel)]="newMessage"
+      placeholder="Write your message"
+    ></ion-input>
     <ion-buttons slot="primary">
-      <ion-button>
+      <ion-button (click)="send()">
         <ion-icon slot="icon-only" name="send"></ion-icon>
       </ion-button>
     </ion-buttons>

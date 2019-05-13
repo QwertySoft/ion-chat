@@ -11,13 +11,16 @@
 
 <ion-content>
   <ion-list>
-    <ion-item *ngFor="let user of users" routerLink="/chat/{{ user.username }}">
+    <ion-item
+      *ngFor="let user of users | async"
+      routerLink="/chat/{{ user.username }}"
+    >
       <ion-avatar slot="start">
         <img src="{{ user.avatar }}" />
       </ion-avatar>
       <ion-label>
         <h2>{{ user.name }}</h2>
-        <p>{{ user.lastMessage }}</p>
+        <p>{{ lastMessage(user) | async }}</p>
       </ion-label>
     </ion-item>
   </ion-list>

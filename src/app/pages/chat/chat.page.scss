@@ -1,0 +1,31 @@
+.bubble-wrap {
+  padding: 20px;
+  .bubble {
+    color: #212121;
+    background: rgba(255, 255, 255, 0.94);
+    padding: 8px 16px;
+    border-radius: 5px 15px 15px 15px;
+    font-weight: 400;
+    text-transform: none;
+    text-align: left;
+    font-size: 16px;
+    letter-spacing: 0.5px;
+    margin: 0 0 2px 0;
+    max-width: 65%;
+    display: inline-block;
+    float: left;
+    clear: both;
+    line-height: 1.5em;
+    word-break: break-word;
+    transform-origin: left top;
+    transition: all 200ms;
+    box-sizing: content-box;
+    &.reply {
+      background: rgba(44, 44, 44, 0.67);
+      color: #fff;
+      border-radius: 15px 15px 5px 15px;
+      float: right;
+      transform-origin: right top;
+    }
+  }
+}

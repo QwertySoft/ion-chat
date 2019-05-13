@@ -3,17 +3,14 @@ import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import * as faker from 'faker';
 import { User } from '../models/user.interface';
+import { ChatService } from '../services/chat.service';
 
 @Injectable()
-export class UserResolver implements Resolve<Observable<User>> {
-  constructor() {}
+export class UserResolver implements Resolve<User> {
+  constructor(private chat: ChatService) {}
 
   resolve(route: ActivatedRouteSnapshot) {
     const username = route.params.user as string;
-    return of({
-      name: faker.name.firstName(),
-      username,
-      avatar: faker.internet.avatar()
-    });
+    return this.chat.currentUsers().find(user => user.username === username);
   }
 }

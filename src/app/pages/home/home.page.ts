@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import * as faker from 'faker';
+import { User } from 'src/app/models/user.interface';
+import { ChatService } from 'src/app/services/chat.service';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-home',
@@ -7,15 +11,19 @@ import * as faker from 'faker';
   styleUrls: ['home.page.scss']
 })
 export class HomePage implements OnInit {
-  public users = [1, 2, 4, 5, 6, 7, 8, 9, 10].map(_ => {
-    const name = faker.name.firstName();
-    return {
-      name,
-      username: faker.internet.userName(name),
-      avatar: faker.internet.avatar(),
-      lastMessage: faker.lorem.sentence()
-    };
-  });
+  public users: Observable<User[]>;
 
-  ngOnInit() {}
+  constructor(private chat: ChatService) {}
+
+  ngOnInit() {
+    this.users = this.chat.getUsers();
+  }
+
+  lastMessage(user: User) {
+    this.chat
+      .conversation(user)
+      .pipe(
+        map(messages => messages.length > 0 && messages[messages.length - 1])
+      );
+  }
 }
